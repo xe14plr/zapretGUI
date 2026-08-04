@@ -1,0 +1,95 @@
+<Page
+    x:Class="ZapretGUI.App.Views.ListsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:vm="clr-namespace:ZapretGUI.App.ViewModels"
+    d:DataContext="{d:DesignInstance vm:ListsViewModel}"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Списки"
+    d:DesignWidth="900" d:DesignHeight="640">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock Text="Списки" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,4"/>
+            <TextBlock
+                Text="Файлы *-user.txt позволяют добавлять свои домены/IP, не трогая основные списки репозитория."
+                Opacity="0.7" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ui:ListView
+                Grid.Column="0"
+                ItemsSource="{Binding Tabs}"
+                SelectedItem="{Binding SelectedTab}"
+                DisplayMemberPath="Title"/>
+
+            <Grid Grid.Column="2" DataContext="{Binding SelectedTab}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="0,0,0,8">
+                    <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding Description}" Opacity="0.7" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <WrapPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,8">
+                    <ui:Button
+                        Content="Сохранить"
+                        Appearance="Primary"
+                        Command="{Binding SaveCommand}"
+                        Margin="0,0,8,8">
+                        <ui:Button.Icon>
+                            <ui:SymbolIcon Symbol="SaveEdit24"/>
+                        </ui:Button.Icon>
+                    </ui:Button>
+                    <ui:Button
+                        Content="Отменить изменения"
+                        Command="{Binding ReloadCommand}"
+                        Margin="0,0,8,8">
+                        <ui:Button.Icon>
+                            <ui:SymbolIcon Symbol="ArrowUndo24"/>
+                        </ui:Button.Icon>
+                    </ui:Button>
+                    <TextBlock
+                        Text="Есть несохранённые изменения"
+                        Foreground="#FFB300"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding IsDirty, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <TextBlock
+                        Text="{Binding StatusMessage}"
+                        Opacity="0.7"
+                        VerticalAlignment="Center"
+                        Margin="8,0,0,0"/>
+                </WrapPanel>
+
+                <ui:TextBox
+                    Grid.Row="2"
+                    Text="{Binding Content, UpdateSourceTrigger=PropertyChanged}"
+                    AcceptsReturn="True"
+                    AcceptsTab="True"
+                    TextWrapping="NoWrap"
+                    VerticalScrollBarVisibility="Auto"
+                    HorizontalScrollBarVisibility="Auto"
+                    FontFamily="Cascadia Mono, Consolas"
+                    FontSize="13"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

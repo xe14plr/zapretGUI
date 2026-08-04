@@ -1,0 +1,20 @@
+# Build output
+src/ZapretGUI.App/bin/
+src/ZapretGUI.App/obj/
+src/ZapretGUI.Core/bin/
+src/ZapretGUI.Core/obj/
+
+# Publish / release staging (built locally, uploaded to GitHub Releases separately)
+publish/
+release/
+
+# Local app config generated at runtime
+src/ZapretGUI.App/bin/**/config.json
+
+# IDE / tooling
+.vs/
+*.user
+.claude/
+
+# Local reference clone of the upstream repo (not part of this project's source)
+repo/

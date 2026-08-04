@@ -1,0 +1,23 @@
+<Application x:Class="ZapretGUI.App.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:conv="clr-namespace:ZapretGUI.App.Converters"
+             xmlns:local="clr-namespace:ZapretGUI.App"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemesDictionary Theme="Dark" />
+                <ui:ControlsDictionary />
+            </ResourceDictionary.MergedDictionaries>
+
+            <conv:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter"/>
+            <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <conv:InverseBoolConverter x:Key="InverseBoolConverter"/>
+            <conv:SeverityToSymbolConverter x:Key="SeverityToSymbolConverter"/>
+            <conv:SeverityToBrushConverter x:Key="SeverityToBrushConverter"/>
+            <conv:UpToDateMultiConverter x:Key="UpToDateConverter"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
