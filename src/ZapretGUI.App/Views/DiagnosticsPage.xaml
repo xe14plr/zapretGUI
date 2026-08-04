@@ -1,0 +1,87 @@
+<Page
+    x:Class="ZapretGUI.App.Views.DiagnosticsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:vm="clr-namespace:ZapretGUI.App.ViewModels"
+    d:DataContext="{d:DesignInstance vm:DiagnosticsViewModel}"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Диагностика"
+    d:DesignWidth="820" d:DesignHeight="700">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="24">
+        <StackPanel MaxWidth="780">
+
+            <TextBlock Text="Диагностика" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,4"/>
+            <TextBlock
+                Text="Проверка распространённых причин, по которым zapret может не работать."
+                Opacity="0.7" Margin="0,0,0,16"/>
+
+            <WrapPanel Orientation="Horizontal" Margin="0,0,0,12">
+                <ui:Button
+                    Content="Запустить диагностику"
+                    Appearance="Primary"
+                    Command="{Binding RunDiagnosticsCommand}"
+                    Margin="0,0,8,8">
+                    <ui:Button.Icon>
+                        <ui:SymbolIcon Symbol="PlayCircle24"/>
+                    </ui:Button.Icon>
+                </ui:Button>
+                <ui:Button
+                    Content="Включить TCP timestamps"
+                    Command="{Binding FixTcpTimestampsCommand}"
+                    Margin="0,0,8,8"/>
+                <ui:Button
+                    Content="Удалить зависший WinDivert"
+                    Command="{Binding RemoveStrayWinDivertCommand}"
+                    Margin="0,0,8,8"/>
+                <ui:Button
+                    Content="Удалить конфликтующие обходы"
+                    Appearance="Danger"
+                    Command="{Binding RemoveConflictingBypassesCommand}"
+                    Margin="0,0,8,8"/>
+                <ui:Button
+                    Content="Очистить кэш Discord"
+                    Command="{Binding ClearDiscordCacheCommand}"
+                    Margin="0,0,8,8"/>
+            </WrapPanel>
+
+            <ui:ProgressRing
+                IsIndeterminate="True"
+                Width="20" Height="20"
+                HorizontalAlignment="Left"
+                Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
+                Margin="0,0,0,12"/>
+
+            <ui:InfoBar
+                Title="Результат"
+                Message="{Binding LastMessage}"
+                IsOpen="{Binding LastMessage, Converter={StaticResource NullOrEmptyToBoolConverter}, Mode=OneWay}"
+                Severity="Informational"
+                Margin="0,0,0,16"/>
+
+            <ItemsControl ItemsSource="{Binding Results}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ui:CardControl Margin="0,0,0,8">
+                            <ui:CardControl.Icon>
+                                <ui:SymbolIcon
+                                    Symbol="{Binding Severity, Converter={StaticResource SeverityToSymbolConverter}}"
+                                    Foreground="{Binding Severity, Converter={StaticResource SeverityToBrushConverter}}"/>
+                            </ui:CardControl.Icon>
+                            <ui:CardControl.Header>
+                                <StackPanel Margin="4">
+                                    <TextBlock Text="{Binding Category}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding Message}" Opacity="0.75" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </ui:CardControl.Header>
+                        </ui:CardControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>
