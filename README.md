@@ -1,71 +1,100 @@
-# ZapretGUI
+<div align="center">
 
-Форк с графической оболочкой, основанный на репозитории [Flowseal/zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube).
+# 🗲 ZapretGUI
 
-Вся логика управления (запуск/остановка обхода, установка в автозапуск, настройки, диагностика) оригинального набора `.bat`-скриптов и `service.bat` перенесена в единое приложение с современным интерфейсом в стиле **Windows 11 (Fluent Design / Mica)**, вместо консольного меню.
+**Современная графическая оболочка в стиле Windows 11 Fluent Design для обхода DPI-блокировок**
+
+[![GitHub release](https://img.shields.io/github/v/release/xe14plr/zapretGUI?style=for-the-badge&color=7289da&logo=github)](https://github.com/xe14plr/zapretGUI/releases)
+[![Target Platform](https://img.shields.io/badge/Platform-Windows_10_%7C_11-blue?style=for-the-badge&logo=windows)](https://github.com/xe14plr/zapretGUI)
+[![Framework](https://img.shields.io/badge/Framework-.NET_8.0-512bd4?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
+[![License](https://img.shields.io/github/license/xe14plr/zapretGUI?style=for-the-badge&color=green)](LICENSE)
+
+---
+
+[О проекте](#-о-проекте) • [Возможности](#-возможности) • [Быстрый старт](#-быстрый-старт) • [Сборка](#-сборка-из-исходников) • [Благодарности](#-благодарности)
+
+---
 
 ![ZapretGUI — Обзор](docs/screenshot-dashboard.png)
 
-## Что это
+</div>
 
-[zapret](https://github.com/bol-van/zapret) — инструмент для обхода DPI-блокировок (замедления YouTube, блокировок Discord и т.д.) на Windows, работающий поверх драйвера [WinDivert](https://github.com/basil00/Divert). [zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube) — набор готовых стратегий обхода и удобных `.bat`-скриптов поверх него.
+## 📌 О проекте
 
-**ZapretGUI** — это не переписывание zapret с нуля, а графическая оболочка над тем же самым `winws.exe`, теми же стратегиями и списками доменов/IP из оригинального репозитория. Все `general*.bat`-файлы используются как есть (парсятся напрямую), поэтому обновления стратегий из апстрима можно просто скопировать в папку `Strategies` — они появятся в приложении автоматически.
+**ZapretGUI** — это полнофункциональный GUI-клиент, превращающий классический консольный набор `.bat`-скриптов [Flowseal/zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube) в удобное приложение с поддержкой **Fluent Design & Mica**.
 
-## Возможности
+Вся подкапотная работа движка [zapret](https://github.com/bol-van/zapret) и драйвера [WinDivert](https://github.com/basil00/Divert) сохранена на 100%. Приложение не переписывает логику с нуля, а напрямую парсит оригинальные файлы `general*.bat`. Это позволяет обновлять пресеты просто перетаскиванием файлов из оригинального репозитория в папку `Strategies`.
 
-- **Обзор** — статус обхода (служба/процесс), быстрый выбор стратегии, запуск вручную или установка в автозапуск Windows, удаление службы
-- **Стратегии** — список всех пресетов из оригинального репозитория с предпросмотром итоговой команды `winws.exe`
-- **Настройки** — Game Filter (расширение диапазона портов для игр), IPSet Filter (none/loaded/any), автопроверка обновлений
-- **Списки** — редактор пользовательских списков доменов и IP (`*-user.txt`) прямо в приложении
-- **Диагностика** — проверка типичных причин, по которым обход не работает (Base Filtering Engine, системный прокси, TCP timestamps, конфликтующие антивирусы/VPN/Killer/Check Point/SmartByte, DNS-over-HTTPS, hosts-файл, зависшие службы WinDivert), очистка кэша Discord
-- **Обновления** — проверка новой версии набора стратегий в репозитории Flowseal
-- Тема интерфейса автоматически следует системной (светлая/тёмная), фон в стиле Mica
+---
 
-## Установка
+## ✨ Возможности
 
-1. Скачайте архив со страницы [Releases](../../releases/latest)
-2. Распакуйте в папку без кириллицы и пробелов в пути
-3. Запустите `ZapretGUI.exe` (потребуются права администратора — как и оригинальному zapret, ему нужны служба, реестр и драйвер WinDivert)
+<table>
+  <tr>
+    <td width="50%">
+      <h3>🖥️ Панель управления</h3>
+      <ul>
+        <li>Мгновенный запуск и остановка обхода в один клик.</li>
+        <li>Установка и удаление службы Windows (автозапуск).</li>
+        <li>Быстрое переключение между активными стратегиями.</li>
+      </ul>
+    </td>
+    <td width="50%">
+      <h3>⚙️ Стратегии и настройки</h3>
+      <ul>
+        <li>Живой предпросмотр итоговой команды <code>winws.exe</code>.</li>
+        <li>Управление <b>Game Filter</b> и режимами <b>IPSet Filter</b>.</li>
+        <li>Встроенный редактор пользовательских списков <code>*-user.txt</code>.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>🩺 Глубокая диагностика</h3>
+      <ul>
+        <li>Автопоиск конфликтов (VPN, Check Point, Killer, SmartByte).</li>
+        <li>Проверка служб BFE, системного прокси, TCP timestamps, DoH.</li>
+        <li>Быстрая очистка зависших служб WinDivert и кэша Discord.</li>
+      </ul>
+    </td>
+    <td width="50%">
+      <h3>🎨 Сопровождение и стиль</h3>
+      <ul>
+        <li>Адаптивный интерфейс: тёмная и светлая темы с эффектом Mica.</li>
+        <li>Автоматическая проверка обновлений наборов стратегий.</li>
+        <li>Полная независимость бизнес-логики от UI.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+---
+
+## 🚀 Быстрый старт
+
+1. Перейдите в раздел **[Releases](../../releases/latest)** и скачайте свежий архив.
+2. Распакуйте его в удобную папку *(избегайте кириллицы и пробелов в пути)*.
+3. Запустите `ZapretGUI.exe` от имени **Администратора**.
 
 > [!WARNING]
-> WinDivert может вызывать реакцию антивируса (детект вида `WinDivert` / `Not-a-virus:RiskTool.Multi.WinDivert`). Это легитимный инструмент перехвата трафика, используемый zapret — сам по себе он не вирус. При проблемах добавьте папку программы в исключения антивируса. Подробности — в [README оригинального проекта](https://github.com/bol-van/zapret-win-bundle/blob/master/readme.md#%D0%B0%D0%BD%D1%82%D0%B8%D0%B2%D0%B8%D1%80%D1%83%D1%81%D1%8B).
+> **Предупреждение о защитных системах:**
+> Драйвер **WinDivert** перехватывает сетевые пакеты для работы `winws.exe`, из-за чего антивирусы могут выдавать предупреждения (`Not-a-virus:RiskTool.Multi.WinDivert`). Это нормальное поведение легитимного инструмента. При возникновении проблем добавьте папку программы в исключения.
+> 
+> 📄 Подробнее см. в [README оригинального проекта](https://github.com/bol-van/zapret-win-bundle/blob/master/readme.md#%D0%B0%D0%BD%D1%82%D0%B8%D0%B2%D0%B8%D1%80%D1%83%D1%81%D1%8B).
 
-## Сборка из исходников
+---
 
-Требуется [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) и Windows 10/11 x64.
+## 🛠️ Сборка из исходников
+
+Для самостоятельной сборки потребуется **[.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)** и **Windows 10/11 x64**.
 
 ```bash
-git clone https://github.com/xe14plr/zapretGUI.git
+# 1. Клонирование репозитория
+git clone [https://github.com/xe14plr/zapretGUI.git](https://github.com/xe14plr/zapretGUI.git)
 cd zapretGUI/src
+
+# 2. Обычная сборка
 dotnet build
-```
 
-Публикация self-contained однофайлового релиза:
-
-```bash
+# 3. Публикация автономного (Self-Contained) .exe файла
 dotnet publish ZapretGUI.App -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o ../publish
-```
-
-## Структура проекта
-
-```
-src/
-  ZapretGUI.Core/     — бизнес-логика (парсер стратегий, служба Windows, диагностика, настройки), без UI-зависимостей
-  ZapretGUI.App/       — WPF-приложение (WPF-UI, MVVM)
-    Assets/bin/         — winws.exe, WinDivert, фейковые пакеты (из upstream zapret-win-bundle)
-    Assets/lists/       — списки доменов и IP (из upstream)
-    Assets/Strategies/  — general*.bat стратегии (из upstream, парсятся как есть)
-```
-
-## Благодарности
-
-- [Flowseal/zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube) — стратегии, списки, идея удобных `.bat`-обёрток, на основе которых сделан этот GUI
-- [bol-van/zapret](https://github.com/bol-van/zapret) и [bol-van/zapret-win-bundle](https://github.com/bol-van/zapret-win-bundle) — сам движок `winws.exe` и сборки WinDivert
-- [lepoco/wpfui](https://github.com/lepoco/wpfui) — библиотека компонентов Fluent Design для WPF
-
-Если вам помог обход — поддержите постановкой звезды оригинальным репозиториям и, по возможности, [оригинального автора zapret](https://github.com/bol-van/zapret?tab=readme-ov-file#%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D1%82%D1%8C-%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%87%D0%B8%D0%BA%D0%B0).
-
-## Лицензия
-
-[MIT](LICENSE)
