@@ -3,7 +3,7 @@ using ZapretGUI.App.ViewModels;
 
 namespace ZapretGUI.App.Views;
 
-public partial class DashboardPage : Page
+public partial class DashboardPage : UserControl
 {
     public DashboardPage()
     {

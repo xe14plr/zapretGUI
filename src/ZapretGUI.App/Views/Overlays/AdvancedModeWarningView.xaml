@@ -1,0 +1,28 @@
+<UserControl
+    x:Class="ZapretGUI.App.Views.Overlays.AdvancedModeWarningView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    mc:Ignorable="d">
+
+    <StackPanel Margin="28" MaxWidth="440">
+        <Path Data="{StaticResource Icon.Warning}" Stroke="{DynamicResource Brush.Warning}"
+              StrokeThickness="1.6" Width="32" Height="32" Stretch="Uniform"
+              HorizontalAlignment="Center" Margin="0,0,0,14"/>
+
+        <TextBlock Text="Продвинутый режим" FontSize="20" FontWeight="SemiBold"
+                    HorizontalAlignment="Center" Margin="0,0,0,8"/>
+
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Opacity="0.8" Margin="0,0,0,24">
+            Здесь показаны все стратегии по отдельности вместе с реальными командами <Run FontFamily="Consolas" Text="winws.exe"/>.
+            Это раздел для отладки и опытных пользователей — если что-то непонятно или выдаёт ошибку,
+            сверяйтесь с документацией zapret, а не меняйте параметры наугад.
+        </TextBlock>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Отмена" Click="Cancel_Click" Margin="0,0,8,0"/>
+            <Button Content="Продолжить" Style="{StaticResource PrimaryButtonStyle}" Click="Continue_Click"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

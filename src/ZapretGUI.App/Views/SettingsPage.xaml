@@ -1,14 +1,14 @@
-<Page
+<UserControl
     x:Class="ZapretGUI.App.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:vm="clr-namespace:ZapretGUI.App.ViewModels"
+    xmlns:controls="clr-namespace:ZapretGUI.App.Controls"
     d:DataContext="{d:DesignInstance vm:SettingsViewModel}"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="Настройки"
+    Background="{DynamicResource Brush.App.Background}"
     d:DesignWidth="780" d:DesignHeight="640">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="24">
@@ -16,33 +16,29 @@
 
             <TextBlock Text="Настройки" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,16"/>
 
-            <ui:InfoBar
-                Title="Ошибка"
+            <controls:InfoBanner
+                Title="Ошибка" Severity="Error"
                 Message="{Binding LastError}"
                 IsOpen="{Binding LastError, Converter={StaticResource NullOrEmptyToBoolConverter}, Mode=OneWay}"
-                Severity="Error"
                 Margin="0,0,0,12"/>
 
-            <ui:InfoBar
-                Title="Готово"
+            <controls:InfoBanner
+                Title="Готово" Severity="Success"
                 Message="{Binding LastMessage}"
                 IsOpen="{Binding LastMessage, Converter={StaticResource NullOrEmptyToBoolConverter}, Mode=OneWay}"
-                Severity="Success"
                 Margin="0,0,0,12"/>
 
-            <ui:CardExpander IsExpanded="True" Margin="0,0,0,16">
-                <ui:CardExpander.Icon>
-                    <ui:SymbolIcon Symbol="Games24"/>
-                </ui:CardExpander.Icon>
-                <ui:CardExpander.Header>
-                    <StackPanel Margin="8,4">
-                        <TextBlock Text="Game Filter" FontWeight="SemiBold" FontSize="16"/>
-                        <TextBlock Opacity="0.7" Margin="0,2,0,0">
-                            Расширяет диапазон портов (1024-65535) для UDP/TCP трафика игр и других сервисов.
-                        </TextBlock>
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                        <Path Data="{StaticResource Icon.Game}" Stroke="{DynamicResource Brush.Text.Secondary}"
+                              StrokeThickness="1.5" Width="20" Height="20" Stretch="Uniform" Margin="0,0,12,0"/>
+                        <StackPanel>
+                            <TextBlock Text="Game Filter" FontWeight="SemiBold" FontSize="16"/>
+                            <TextBlock Opacity="0.7" Margin="0,2,0,0" TextWrapping="Wrap"
+                                       Text="Расширяет диапазон портов (1024-65535) для UDP/TCP трафика игр и других сервисов."/>
+                        </StackPanel>
                     </StackPanel>
-                </ui:CardExpander.Header>
-                <StackPanel Margin="8">
                     <ComboBox
                         ItemsSource="{Binding GameFilterOptions}"
                         DisplayMemberPath="Label"
@@ -54,56 +50,108 @@
                         Text="После переключения требуется перезапуск стратегии."
                         Opacity="0.6" FontSize="12" Margin="0,8,0,0"/>
                 </StackPanel>
-            </ui:CardExpander>
+            </Border>
 
-            <ui:CardExpander IsExpanded="True" Margin="0,0,0,16">
-                <ui:CardExpander.Icon>
-                    <ui:SymbolIcon Symbol="NetworkCheck24"/>
-                </ui:CardExpander.Icon>
-                <ui:CardExpander.Header>
-                    <StackPanel Margin="8,4">
-                        <TextBlock Text="IPSet Filter" FontWeight="SemiBold" FontSize="16"/>
-                        <TextBlock Text="{Binding IpsetFilterDescription}" Opacity="0.7" Margin="0,2,0,0"/>
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,16">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                        <Path Data="{StaticResource Icon.Network}" Stroke="{DynamicResource Brush.Text.Secondary}"
+                              StrokeThickness="1.5" Width="20" Height="20" Stretch="Uniform" Margin="0,0,12,0"/>
+                        <StackPanel>
+                            <TextBlock Text="IPSet Filter" FontWeight="SemiBold" FontSize="16"/>
+                            <TextBlock Text="{Binding IpsetFilterDescription}" Opacity="0.7" Margin="0,2,0,0" TextWrapping="Wrap"/>
+                        </StackPanel>
                     </StackPanel>
-                </ui:CardExpander.Header>
-                <StackPanel Margin="8">
                     <WrapPanel Orientation="Horizontal">
-                        <ui:Button
-                            Content="Переключить режим"
-                            Command="{Binding CycleIpsetFilterCommand}"
-                            Margin="0,0,8,8">
-                            <ui:Button.Icon>
-                                <ui:SymbolIcon Symbol="ArrowSwap24"/>
-                            </ui:Button.Icon>
-                        </ui:Button>
-                        <ui:Button
-                            Content="Обновить список IPSet"
-                            Command="{Binding UpdateIpsetListCommand}"
-                            Margin="0,0,8,8">
-                            <ui:Button.Icon>
-                                <ui:SymbolIcon Symbol="ArrowDownload24"/>
-                            </ui:Button.Icon>
-                        </ui:Button>
+                        <Button Command="{Binding CycleIpsetFilterCommand}" Margin="0,0,8,8">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource Icon.Swap}" Stroke="{DynamicResource Brush.Text.Primary}" StrokeThickness="1.6" Width="14" Height="14" Stretch="Uniform"/>
+                                <TextBlock Text="Переключить режим" Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Command="{Binding UpdateIpsetListCommand}" Margin="0,0,8,8">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource Icon.Download}" Stroke="{DynamicResource Brush.Text.Primary}" StrokeThickness="1.6" Width="14" Height="14" Stretch="Uniform"/>
+                                <TextBlock Text="Обновить список IPSet" Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </Button>
                     </WrapPanel>
                     <TextBlock
                         Text="Полезно при тестировании, если ресурс не работает без zapret. loaded → none → any → loaded по кругу."
                         Opacity="0.6" FontSize="12" TextWrapping="Wrap" Margin="0,4,0,0"/>
                 </StackPanel>
-            </ui:CardExpander>
+            </Border>
 
-            <ui:CardControl Margin="0,0,0,16">
-                <ui:CardControl.Icon>
-                    <ui:SymbolIcon Symbol="ArrowSync24"/>
-                </ui:CardControl.Icon>
-                <ui:CardControl.Header>
-                    <StackPanel>
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Path Grid.Column="0" Data="{StaticResource Icon.Refresh}" Stroke="{DynamicResource Brush.Text.Secondary}"
+                          StrokeThickness="1.6" Width="20" Height="20" Stretch="Uniform" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
                         <TextBlock Text="Автоматическая проверка обновлений" FontWeight="SemiBold"/>
                         <TextBlock Opacity="0.7" Margin="0,2,0,0" Text="Проверять наличие новой версии стратегий при запуске."/>
                     </StackPanel>
-                </ui:CardControl.Header>
-                <ui:ToggleSwitch IsChecked="{Binding AutoUpdateEnabled}"/>
-            </ui:CardControl>
+                    <CheckBox Grid.Column="2" Style="{StaticResource ToggleSwitchStyle}" IsChecked="{Binding AutoUpdateEnabled}" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Path Grid.Column="0" Data="{StaticResource Icon.Code}" Stroke="{DynamicResource Brush.Text.Secondary}"
+                          StrokeThickness="1.6" Width="20" Height="20" Stretch="Uniform" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="Для опытных" FontWeight="SemiBold"/>
+                        <TextBlock Opacity="0.7" Margin="0,2,0,0" TextWrapping="Wrap"
+                                   Text="Полный список стратегий по отдельности и сырые команды winws.exe — для отладки и багрепортов."/>
+                    </StackPanel>
+                    <Button Grid.Column="2" Content="Открыть" Command="{Binding OpenAdvancedCommand}" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource CardStyle}" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="Внешний вид" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,12"/>
+
+                    <TextBlock Text="Тема" Opacity="0.6" FontSize="12" Margin="0,0,0,6"/>
+                    <Border Background="{DynamicResource Brush.Surface}" CornerRadius="9" Padding="3"
+                            HorizontalAlignment="Left" Margin="0,0,0,16">
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton Content="Тёмная" Style="{StaticResource SegmentButtonStyle}"
+                                          IsChecked="{Binding IsDarkTheme, Mode=OneWay}"
+                                          Command="{Binding SetDarkThemeCommand}"/>
+                            <ToggleButton Content="Светлая" Style="{StaticResource SegmentButtonStyle}"
+                                          IsChecked="{Binding IsLightTheme, Mode=OneWay}"
+                                          Command="{Binding SetLightThemeCommand}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <TextBlock Text="Акцентный цвет" Opacity="0.6" FontSize="12" Margin="0,0,0,8"/>
+                    <ItemsControl ItemsSource="{Binding AccentSwatches}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource AccentSwatchStyle}" Tag="{Binding}"
+                                        Command="{Binding DataContext.SetAccentCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
 
         </StackPanel>
     </ScrollViewer>
-</Page>
+</UserControl>

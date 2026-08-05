@@ -1,6 +1,5 @@
 using System.Windows;
-using Wpf.Ui.Appearance;
-using Wpf.Ui.Controls;
+using ZapretGUI.App.Services;
 
 namespace ZapretGUI.App;
 
@@ -13,6 +12,7 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        ApplicationThemeManager.Apply(ApplicationTheme.Dark, WindowBackdropType.Mica, updateAccent: true);
+        var settings = AppServices.Settings.Load();
+        AppServices.Theme.Apply(settings.Theme, settings.AccentColorHex);
     }
 }

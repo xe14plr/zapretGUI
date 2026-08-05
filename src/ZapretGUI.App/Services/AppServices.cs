@@ -18,6 +18,10 @@ public static class AppServices
     public static ListUpdateService ListUpdate { get; } = new();
     public static DiagnosticsService Diagnostics { get; } = new();
     public static UpdateCheckService UpdateCheck { get; } = new();
+    public static ModalService Modal { get; } = new();
+    public static ServiceHealthCheckService HealthCheck { get; } = new();
+    public static StrategyAutoSelectService AutoSelect { get; } = new(HealthCheck);
+    public static ThemeService Theme { get; } = new();
 
     /// <summary>Version of the bundled general*.bat / bin / lists asset set (from upstream's service.bat LOCAL_VERSION).</summary>
     public const string BundledStrategiesVersion = "1.10.0";

@@ -1,9 +1,9 @@
-<Page
+<UserControl
     x:Class="ZapretGUI.App.Views.AboutPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    Title="О программе">
+    xmlns:controls="clr-namespace:ZapretGUI.App.Controls"
+    Background="{DynamicResource Brush.App.Background}">
     <StackPanel Margin="24" MaxWidth="640">
         <TextBlock Text="О программе" FontSize="28" FontWeight="SemiBold" Margin="0,0,0,16"/>
 
@@ -15,12 +15,9 @@
             (bol-van) и драйвере WinDivert.
         </TextBlock>
 
-        <ui:InfoBar
-            Title="WinDivert и антивирусы"
+        <controls:InfoBanner
+            Title="WinDivert и антивирусы" Severity="Warning" IsOpen="True"
             Message="WinDivert может вызывать реакцию антивируса (детект вида WinDivert / Not-a-virus:RiskTool.Multi.WinDivert). Это инструмент перехвата трафика, используемый zapret — сам по себе он не является вирусом. При проблемах добавьте папку программы в исключения антивируса."
-            Severity="Warning"
-            IsOpen="True"
-            IsClosable="False"
             Margin="0,0,0,12"/>
 
         <TextBlock TextWrapping="Wrap" Margin="0,0,0,4" Text="Ссылки:"/>
@@ -29,4 +26,4 @@
 
         <TextBlock Text="Лицензия: MIT" Opacity="0.7"/>
     </StackPanel>
-</Page>
+</UserControl>

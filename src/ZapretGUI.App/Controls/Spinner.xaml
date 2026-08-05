@@ -1,0 +1,32 @@
+<UserControl
+    x:Class="ZapretGUI.App.Controls.Spinner"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Width="20" Height="20">
+
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation
+                        Storyboard.TargetName="SpinTransform"
+                        Storyboard.TargetProperty="Angle"
+                        From="0" To="360" Duration="0:0:0.9"
+                        RepeatBehavior="Forever"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
+
+    <Grid>
+        <Ellipse Width="20" Height="20" Stroke="{DynamicResource Brush.Border.Strong}" StrokeThickness="2.5"/>
+        <Path Width="20" Height="20" Stretch="None" Stroke="{DynamicResource Brush.Accent}" StrokeThickness="2.5" StrokeStartLineCap="Round">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="SpinTransform" CenterX="10" CenterY="10"/>
+            </Path.RenderTransform>
+            <Path.Data>
+                <PathGeometry Figures="M10,1.25 A8.75,8.75 0 0 1 18.75,10"/>
+            </Path.Data>
+        </Path>
+    </Grid>
+</UserControl>
