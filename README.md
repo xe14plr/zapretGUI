@@ -14,7 +14,7 @@
 
 ---
 
-![ZapretGUI — Обзор](docs/screenshot-dashboard.png)
+![ZapretGUI — Обзор
 
 </div>
 
