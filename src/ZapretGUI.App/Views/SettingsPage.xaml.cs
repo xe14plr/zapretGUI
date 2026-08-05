@@ -3,7 +3,7 @@ using ZapretGUI.App.ViewModels;
 
 namespace ZapretGUI.App.Views;
 
-public partial class SettingsPage : Page
+public partial class SettingsPage : UserControl
 {
     public SettingsPage()
     {

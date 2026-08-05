@@ -24,6 +24,15 @@ public sealed class BoolToVisibilityConverter : IValueConverter
         value is Visibility.Visible;
 }
 
+public sealed class InverseBoolToVisibilityConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        value is true ? Visibility.Collapsed : Visibility.Visible;
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        value is Visibility.Collapsed;
+}
+
 public sealed class InverseBoolConverter : IValueConverter
 {
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
@@ -33,18 +42,22 @@ public sealed class InverseBoolConverter : IValueConverter
         value is bool b && !b;
 }
 
-public sealed class SeverityToSymbolConverter : IValueConverter
+public sealed class SeverityToIconConverter : IValueConverter
 {
-    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
-        value is DiagnosticSeverity severity
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        var key = value is DiagnosticSeverity severity
             ? severity switch
             {
-                DiagnosticSeverity.Ok => Wpf.Ui.Controls.SymbolRegular.CheckmarkCircle24,
-                DiagnosticSeverity.Warning => Wpf.Ui.Controls.SymbolRegular.Warning24,
-                DiagnosticSeverity.Error => Wpf.Ui.Controls.SymbolRegular.ErrorCircle24,
-                _ => Wpf.Ui.Controls.SymbolRegular.CheckmarkCircle24
+                DiagnosticSeverity.Ok => "Icon.CheckCircle",
+                DiagnosticSeverity.Warning => "Icon.Warning",
+                DiagnosticSeverity.Error => "Icon.ErrorCircle",
+                _ => "Icon.CheckCircle"
             }
-            : Wpf.Ui.Controls.SymbolRegular.CheckmarkCircle24;
+            : "Icon.CheckCircle";
+
+        return Application.Current.TryFindResource(key);
+    }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
         throw new NotSupportedException();
@@ -64,22 +77,45 @@ public sealed class UpToDateMultiConverter : IMultiValueConverter
         throw new NotSupportedException();
 }
 
+public sealed class HexToBrushConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is string hex)
+        {
+            try
+            {
+                return new SolidColorBrush((Color)ColorConverter.ConvertFromString(hex));
+            }
+            catch
+            {
+                // fall through
+            }
+        }
+
+        return Brushes.Transparent;
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotSupportedException();
+}
+
 public sealed class SeverityToBrushConverter : IValueConverter
 {
-    private static readonly SolidColorBrush OkBrush = new(Color.FromRgb(0x4C, 0xAF, 0x50));
-    private static readonly SolidColorBrush WarningBrush = new(Color.FromRgb(0xFF, 0xB3, 0x00));
-    private static readonly SolidColorBrush ErrorBrush = new(Color.FromRgb(0xE5, 0x39, 0x35));
-
-    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
-        value is DiagnosticSeverity severity
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        var key = value is DiagnosticSeverity severity
             ? severity switch
             {
-                DiagnosticSeverity.Ok => OkBrush,
-                DiagnosticSeverity.Warning => WarningBrush,
-                DiagnosticSeverity.Error => ErrorBrush,
-                _ => OkBrush
+                DiagnosticSeverity.Ok => "Brush.Success",
+                DiagnosticSeverity.Warning => "Brush.Warning",
+                DiagnosticSeverity.Error => "Brush.Error",
+                _ => "Brush.Success"
             }
-            : OkBrush;
+            : "Brush.Success";
+
+        return Application.Current.TryFindResource(key);
+    }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
         throw new NotSupportedException();

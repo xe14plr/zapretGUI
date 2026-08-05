@@ -3,7 +3,7 @@ using ZapretGUI.App.ViewModels;
 
 namespace ZapretGUI.App.Views;
 
-public partial class ListsPage : Page
+public partial class ListsPage : UserControl
 {
     public ListsPage()
     {
