@@ -2,7 +2,7 @@
 
 # 🗲 ZapretGUI
 
-**Современная графическая оболочка в стиле Windows 11 Fluent Design для обхода DPI-блокировок**
+**Графическая оболочка для Flowseal/zapret-discord-youtube **
 
 [![GitHub release](https://img.shields.io/github/v/release/xe14plr/zapretGUI?style=for-the-badge&color=7289da&logo=github)](https://github.com/xe14plr/zapretGUI/releases)
 [![Target Platform](https://img.shields.io/badge/Platform-Windows_10_%7C_11-blue?style=for-the-badge&logo=windows)](https://github.com/xe14plr/zapretGUI)
