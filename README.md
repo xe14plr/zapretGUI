@@ -1,4 +1,6 @@
-# 🗲 ZapretGUI
+<p align="center">
+🗲 ZapretGUI
+</p>
 
 <p align="center">
   <img src="https://img.shields.io/github/v/release/xe14plr/zapretGUI?style=for-the-badge&color=7289da&logo=github" alt="release">
